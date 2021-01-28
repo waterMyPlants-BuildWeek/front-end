@@ -22,8 +22,7 @@ const PlantCard = (props) => {
         h2oFrequency,
         id,
         image,
-        species,
-        user
+        species
      } = props
 
     //  const deleteItem = (collection, item) => {

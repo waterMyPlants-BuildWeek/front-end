@@ -113,10 +113,6 @@ const AddPlantForm = ({setOpen}) => {
 
 export default AddPlantForm
 
-const Wrapper = styled.div`
-    padding: 2rem;
-`
-
 const Heading = styled.h2`
     font-size: 1.8rem;
     margin: 0;
