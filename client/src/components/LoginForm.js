@@ -9,6 +9,7 @@ const LoginForm = () => {
     const history = useHistory()
     
     const initialState = {
+        username: '',
         email: '',
         password: ''
     }
