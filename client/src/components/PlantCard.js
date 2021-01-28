@@ -33,7 +33,7 @@ const PlantCard = (props) => {
     const deleteItem = (selected) => {
         db.collection('plants').doc(selected).delete()
     }
-
+    
     return (
         <Card>
             <Header>
@@ -60,7 +60,7 @@ const PlantCard = (props) => {
                     <MenuItem onClick={() => deleteItem(id)}>Delete Plant</MenuItem>
                 </Menu>
             </Header>
-            <img src={image}/>
+            <img src={image} alt='{species}'/>
             <Content>
                 <p><strong>Water Plant:</strong> {h2oFrequency}</p>
                 <p><strong>Last Watered:</strong> 12/23/2020</p>

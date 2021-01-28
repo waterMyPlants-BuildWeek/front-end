@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { db, storage } from '../firebase'
 import { useHistory } from 'react-router-dom'
 
-const AddPlantForm = () => {
+const AddPlantForm = ({setOpen}) => {
 
     const {currentUser} = useContext(AuthContext)
     const history = useHistory()
@@ -14,7 +14,7 @@ const AddPlantForm = () => {
         user: currentUser.uid,
         nickname: '',
         species: '',
-        h2oFrequency: '',
+        h2oFrequency: 'Daily',
         image: ''
     }
 
@@ -54,6 +54,7 @@ const AddPlantForm = () => {
         db.collection('plants').add(plant)
         setPlant(initialForm)
         history.push('/dashboard')
+        setOpen(false)
     }
 
 
@@ -80,19 +81,22 @@ const AddPlantForm = () => {
                 />
                 <InputLabel id="frequency">Water Frequency</InputLabel>
                 <Select
-                    id='frequency' 
+                    labelId='frequency'
+                    id='frequency'
                     name='h2oFrequency' 
                     value={plant.h2oFrequency} 
                     onChange={handleChange}
                     variant='outlined'
                     margin='dense'
+                    
                 >
                     {frequency.map(item => 
                         <MenuItem value={item.title}>{item.title}</MenuItem>    
                     )}
                 </Select>
-                <InputLabel id='image'>Plant Image</InputLabel>
-                <Input id='image' type='file' onChange={onFileChange} />
+                <InputLabel id='image'>Plant Image
+                <Upload id='image' type='file' onChange={onFileChange} />
+                </InputLabel>
                 <Button
                     disabled={uploading}
                     type='submit' 
@@ -125,10 +129,14 @@ const Form = styled.form`
     grid-template-columns: 1fr;
     border: 1px solid #555;
     border-radius: 5px;
-    max-width: 300px;
-    padding: 1rem;
-    gap: .5rem;
+    max-width: 350px;
+    padding: 2rem;
+    gap: .75rem;
     & h2{
         text-align: center;
     }
+`
+
+const Upload = styled(Input)`
+    padding: 1rem 0;
 `
