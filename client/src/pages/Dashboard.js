@@ -3,6 +3,7 @@ import AddPlantForm from '../components/AddPlantForm'
 import MyPlants from '../components/MyPlants'
 import { AuthContext } from '../contexts/Auth'
 import styled from 'styled-components'
+import EditUser from "../components/EditUser"
 
 const Dashboard = () => {
 
@@ -16,6 +17,7 @@ const Dashboard = () => {
             </div>
             <MyPlants uid={currentUser.uid} />
             <AddPlantForm />
+            <EditUser />
         </Wrapper>
     )
 }
