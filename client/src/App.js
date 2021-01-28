@@ -5,6 +5,7 @@ import PrivateRoute from './components/PrivateRoute';
 import Dashboard from './pages/Dashboard'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { AuthProvider } from './contexts/Auth'
+import Homepage from './pages/Homepage'
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
         <Router>
           <>
           <Nav />
+          <Route exact path='/' component={Homepage} />
           <PrivateRoute path='/dashboard' component={Dashboard}/>
           <Route path='/login' component={Login} />
           </>
