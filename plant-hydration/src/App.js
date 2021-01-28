@@ -1,13 +1,11 @@
-
+import Content from './Features/Content.js';
 import "bootstrap/dist/css/bootstrap.css";
-import './App.css';
+import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-       Plant Hydration
-      </header>
+    <div className="App ">
+    <Content />
     </div>
   );
 }
