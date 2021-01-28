@@ -7,15 +7,6 @@ const MyPlants = ({uid}) => {
 
     const [plants, setPlants] = useState([])
 
-
-    // useEffect(() => {
-    //     db.collection('plants').where("user", "==", uid).onSnapshot(snapshot => 
-    //     {
-    //         let data = snapshot.docs.map(doc => ({...doc.data(), id: doc.id}))
-    //         setPlants(data)
-    //     })
-    // },[])
-
     useEffect(() => {
         db.collection('plants').where("user", "==", uid).onSnapshot(snapshot => 
             {
@@ -24,16 +15,12 @@ const MyPlants = ({uid}) => {
             })
     },[])
 
-    useEffect(() => {
-        console.log(plants)
-    }, [plants])
-
     return (
         <>
             <Heading>My Plants</Heading>
             <Plants>
                 {plants.map(plant => 
-                    <PlantCard
+                    <PlantCard key={plant.id}
                         {...plant}
                     />
                 )}
