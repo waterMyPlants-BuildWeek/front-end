@@ -1,8 +1,21 @@
-import React from 'react'
+import { Button, IconButton, Menu, MenuItem } from '@material-ui/core'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 import { db } from '../firebase'
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const PlantCard = (props) => {
+
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+  
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+  
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
 
     const { 
         nickname,
@@ -17,20 +30,44 @@ const PlantCard = (props) => {
     //     db.collection(collection).doc(item.id).delete()
     //   }
 
-    const deleteItem = (e) => {
-        db.collection('plants').doc(e.target.value).delete()
+    const deleteItem = (selected) => {
+        db.collection('plants').doc(selected).delete()
     }
 
     return (
         <Card>
-            <img src={image}/>
-            <div>
+            <Header>
+                <div>
                 <h2>{nickname}</h2>
                 <p>Species: {species}</p>
-                <p>h2oFrequency: {h2oFrequency}</p>
-                <button>Just Watered</button>
-                <button value={id} onClick={deleteItem}>Delete Plant</button>
-            </div>
+                </div>
+                <IconButton
+                    aria-label="more"
+                    aria-controls="menu"
+                    aria-haspopup="true"
+                    onClick={handleClick}
+                >
+                    <MyMoreVertIcon />
+                </IconButton>
+                <Menu
+                id='menu'
+                anchorEl={anchorEl}
+                keepMounted
+                open={open}
+                onClose={handleClose}
+                >
+                    <MenuItem>Edit Plant</MenuItem>
+                    <MenuItem onClick={() => deleteItem(id)}>Delete Plant</MenuItem>
+                </Menu>
+            </Header>
+            <img src={image}/>
+            <Content>
+                <p><strong>Water Plant:</strong> {h2oFrequency}</p>
+                <p><strong>Last Watered:</strong> 12/23/2020</p>
+            </Content>
+            <ButtonGroup>
+                <MyButton color='primary' variant='contained'>Just Watered</MyButton>
+            </ButtonGroup>
         </Card>
     )
 }
@@ -41,20 +78,50 @@ const Card = styled.div`
     display: grid;
     grid-template-columns: 1fr;
     border: 1px solid #ccc;
-    border-radius: .6rem;
-    box-shadow: 0 0 8px rgba(0,0,0,.35);
+    border-radius: 6px;
+    box-shadow: 0 0 3px rgba(0,0,0,.35);
     background-color: #fff;
-    & div {
-        padding: 1rem;
-    }
     & img {
         width: 100%;
         height: 200px;
         object-fit: cover;
         object-position: center;
-        border-radius: .6rem .6rem 0 0;
     }
     & * {
         margin: 0;
     }
+`
+
+const Header = styled.div`
+    display: grid;
+    grid-template-columns: 1fr auto;
+    text-transform: capitalize;
+    align-items: start;
+    padding: 1rem;
+    & h2 {
+        font-size: 1.25rem;
+    }
+    & p{
+        font-size: .75rem;
+        color: rgba(0, 0, 0, 0.54);
+    }
+`
+
+const Content = styled.div`
+    padding: 1rem;
+    color: rgba(0, 0, 0, 0.54);
+    font-size: .875rem;
+`
+
+const ButtonGroup = styled.div`
+    padding: 0 1rem 1rem;
+`
+
+
+const MyButton = styled(Button)`
+    width: 100%;
+`
+
+const MyMoreVertIcon = styled(MoreVertIcon)`
+    justify-self: end;
 `
