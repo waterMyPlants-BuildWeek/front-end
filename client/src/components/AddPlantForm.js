@@ -59,54 +59,67 @@ const AddPlantForm = () => {
 
 
     return (
-        <Form onSubmit={onSubmit}>
-            <h2>Add a Plant</h2>
-            <TextField 
-                label='Plant Nickname'
-                name='nickname'
-                value={plant.nickname}
-                onChange={handleChange}
-                variant='outlined'
-                margin='dense'
-            />
-            <TextField 
-                label='Plant Species'
-                name='species'
-                value={plant.species}
-                onChange={handleChange}
-                variant='outlined'
-                margin='dense'
-            />
-            <InputLabel id="frequency">Water Frequency</InputLabel>
-            <Select
-                id='frequency' 
-                name='h2oFrequency' 
-                value={plant.h2oFrequency} 
-                onChange={handleChange}
-                variant='outlined'
-                margin='dense'
-            >
-                {frequency.map(item => 
-                    <MenuItem value={item.title}>{item.title}</MenuItem>    
-                )}
-            </Select>
-            <InputLabel id='image'>Plant Image</InputLabel>
-            <Input id='image' type='file' onChange={onFileChange} />
-            <Button
-                disabled={uploading}
-                type='submit' 
-                color='primary' 
-                variant='contained'
-            >
-                Add Plant
-            </Button>
-            
-        </Form>
+        <>
+            <Form onSubmit={onSubmit}>
+                <Heading>Add a Plant</Heading>
+                <TextField 
+                    label='Plant Nickname'
+                    name='nickname'
+                    value={plant.nickname}
+                    onChange={handleChange}
+                    variant='outlined'
+                    margin='dense'
+                />
+                <TextField 
+                    label='Plant Species'
+                    name='species'
+                    value={plant.species}
+                    onChange={handleChange}
+                    variant='outlined'
+                    margin='dense'
+                />
+                <InputLabel id="frequency">Water Frequency</InputLabel>
+                <Select
+                    id='frequency' 
+                    name='h2oFrequency' 
+                    value={plant.h2oFrequency} 
+                    onChange={handleChange}
+                    variant='outlined'
+                    margin='dense'
+                >
+                    {frequency.map(item => 
+                        <MenuItem value={item.title}>{item.title}</MenuItem>    
+                    )}
+                </Select>
+                <InputLabel id='image'>Plant Image</InputLabel>
+                <Input id='image' type='file' onChange={onFileChange} />
+                <Button
+                    disabled={uploading}
+                    type='submit' 
+                    color='primary' 
+                    variant='contained'
+                >
+                    Add Plant
+                </Button>
+                
+            </Form>
+        </>
     )
 }
 
 export default AddPlantForm
 
+const Wrapper = styled.div`
+    padding: 2rem;
+`
+
+const Heading = styled.h2`
+    font-size: 1.8rem;
+    margin: 0;
+    @media (max-width: 600px){
+        text-align: center;  
+    }
+`
 const Form = styled.form`
     display: grid;
     grid-template-columns: 1fr;
@@ -114,7 +127,7 @@ const Form = styled.form`
     border-radius: 5px;
     max-width: 300px;
     padding: 1rem;
-    gap: .25rem;
+    gap: .5rem;
     & h2{
         text-align: center;
     }

@@ -40,10 +40,10 @@ export default PlantCard
 const Card = styled.div`
     display: grid;
     grid-template-columns: 1fr;
-    max-width: 300px;
     border: 1px solid #ccc;
     border-radius: .6rem;
     box-shadow: 0 0 8px rgba(0,0,0,.35);
+    background-color: #fff;
     & div {
         padding: 1rem;
     }
@@ -57,5 +57,4 @@ const Card = styled.div`
     & * {
         margin: 0;
     }
-    margin: 3rem;
 `
