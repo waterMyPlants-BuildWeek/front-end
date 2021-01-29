@@ -13,7 +13,7 @@ const MyPlants = ({uid}) => {
                 let data = snapshot.docs.map(doc => ({...doc.data(), id: doc.id}))
                 setPlants(data)
             })
-    },[])
+    },[uid])
 
     return (
         <>
