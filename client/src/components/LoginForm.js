@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Button, TextField } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import { auth } from '../firebase'
+import axios from 'axios'
 
 const LoginForm = () => {
 
@@ -24,19 +25,31 @@ const LoginForm = () => {
         })
     }
 
+    // const onSubmit = (e) => {
+    //     e.preventDefault()
+    //     if(login){
+    //         auth.signInWithEmailAndPassword(user.email,user.password)
+    //             .then(setUser(initialState))
+    //             .then(history.push('/dashboard'))
+    //             .catch(err => alert(err.message))
+    //     } else {
+    //         auth.createUserWithEmailAndPassword(user.email,user.password)
+    //             .then(setUser(initialState))
+    //             .then(history.push('/dashboard'))
+    //             .catch(err => alert(err.message))
+    //     }
+    // }
+
+
+    //WITH AXIOS
+
     const onSubmit = (e) => {
         e.preventDefault()
-        if(login){
-            auth.signInWithEmailAndPassword(user.email,user.password)
-                .then(setUser(initialState))
-                .then(history.push('/dashboard'))
-                .catch(err => alert(err.message))
-        } else {
-            auth.createUserWithEmailAndPassword(user.email,user.password)
-                .then(setUser(initialState))
-                .then(history.push('/dashboard'))
-                .catch(err => alert(err.message))
-        }
+        axios.post('https://water-my-plants-tt101.herokuapp.com/users/register', user)
+        .then(res => {
+            localStorage.setItem('userToken', res.data.payload);
+            console.log(res)
+        })
     }
 
 
@@ -44,6 +57,15 @@ const LoginForm = () => {
         <>
         <Form onSubmit={onSubmit}>
             <h2>{login ? 'Login' : 'Sign Up'}</h2> 
+            <TextField
+                type='text'
+                name='username'
+                value={user.username}
+                onChange={handleChange} 
+                variant='outlined'
+                label='username'
+                margin='dense'
+            />
             <TextField
                 name='email'
                 type='email'
