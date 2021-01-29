@@ -45,11 +45,22 @@ const LoginForm = () => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        axios.post('https://water-my-plants-tt101.herokuapp.com/users/register', user)
-        .then(res => {
-            localStorage.setItem('userToken', res.data.payload);
-            console.log(res)
-        })
+        if(login){
+            axios.post('https://water-my-plants-tt101.herokuapp.com/users/login', user)
+            .then(res => {
+                localStorage.setItem('userToken', res.data.token)
+                setUser(initialState)
+            })
+            .then(history.push('/dashboard'))
+        } else {
+            axios.post('https://water-my-plants-tt101.herokuapp.com/users/register', user)
+            .then(res => {
+                localStorage.setItem('userToken', res.data.token);
+                setLogin(!login)
+            })
+            .then(history.push('/login'))
+
+        }
     }
 
 
@@ -86,12 +97,13 @@ const LoginForm = () => {
             />
             <Button
                 type='submit' 
-                variant='outlined'
+                variant='contained'
+                color='primary'
             >
                 {login ? 'Login' : 'Sign Up'}
             </Button>
         </Form>
-        <Button color='primary' onClick={()=> setLogin(!login)}>{login ? 'Sign Up' : 'Log In'}</Button>
+        <Button color='secondary' size='small' variant='contained' onClick={()=> setLogin(!login)}>{login ? 'Go to Sign Up' : 'Go to Log In'}</Button>
         </>
     )
 }

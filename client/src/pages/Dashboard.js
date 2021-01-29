@@ -7,24 +7,24 @@ import { Button, Dialog } from '@material-ui/core'
 
 const Dashboard = () => {
 
-    const { currentUser } = useContext(AuthContext)
-    const [open, setOpen] = useState(false)
+    // const { currentUser } = useContext(AuthContext)
+    // const [open, setOpen] = useState(false)
 
-    const handleClickOpen = () => {
-        setOpen(true)
-    }
+    // const handleClickOpen = () => {
+    //     setOpen(true)
+    // }
 
-    const handleClose = () => {
-        setOpen(false)
-    }
+    // const handleClose = () => {
+    //     setOpen(false)
+    // }
 
     return (
         <Wrapper>
             <div>
                 <h2>Your Details</h2>
-                <h4>{currentUser.email}</h4>
+                {/* <h4>{currentUser.email}</h4> */}
             </div>
-            <MyButton 
+            {/* <MyButton 
                 variant='contained'
                 color='primary'
                 onClick={handleClickOpen}
@@ -34,7 +34,7 @@ const Dashboard = () => {
             <Dialog open={open} onClose={handleClose} aria-labelledby='Add a Plant'>
                 <AddPlantForm setOpen={setOpen}/>
             </Dialog>
-            <MyPlants uid={currentUser.uid} />
+            <MyPlants uid={currentUser.uid} /> */}
         </Wrapper>
     )
 }
