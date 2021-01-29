@@ -6,6 +6,7 @@ import pearls from "./images/pearls.jpg";
 import gardening from "./images/gardening.jpg";
 import watering from "./images/watering.jpg";
 import watering2 from "./images/watering2.jpg";
+import logo from './images/logo.png';
 import "bootstrap/dist/css/bootstrap.css";
 
 const Homepage = () => {
@@ -13,8 +14,8 @@ const Homepage = () => {
 
   return (
     <Wrapper>
-      <div className="title d-flex flex-column justify-content-center align-items-center">
-        <h1 className="display-1">Water My Plants</h1>
+      <div className="title d-flex flex-column justify-content-start align-items-center">
+        <img src={logo} alt='logo' className='logo-sizer' />
         <h3>Your Personal Plant Watering Reminder Tool</h3>
       </div>
       <div className="spacer-vh50"></div>
