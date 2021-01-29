@@ -6,7 +6,7 @@ import {
   Select,
   TextField,
 } from "@material-ui/core";
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, } from "react";
 import { AuthContext } from "../contexts/Auth";
 import styled from "styled-components";
 import { db, storage } from "../firebase";
@@ -16,6 +16,7 @@ import schema from "./schema.js";
 const AddPlantForm = ({ setOpen }) => {
   const { currentUser } = useContext(AuthContext);
   const history = useHistory();
+    console.log(schema)
 
   const initialForm = {
     user: currentUser.uid,
@@ -30,9 +31,7 @@ const AddPlantForm = ({ setOpen }) => {
 
   const handleChange = (e) => {
     // //submit disable feature
-    // useEffect(() => {
-    //   schema.isValid(formValues).then((valid) => setDisabled(!valid));
-    // }, [formValues]);
+   
 
 
     setPlant({
