@@ -1,9 +1,78 @@
 .App {
   min-height: 100vh;
+  
+}
+body {
+  background-image: url('pages/images/head-image.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-color: #777777
+
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-shadow: 0 0 1.5rem black;
 }
 
 .title {
-  background-color: #444;
-  padding: 5rem 3rem;
-  opacity: 0.8;
+  
+  background-color: #FFF;
+  box-shadow: .5rem .5rem 1rem black;
+  padding: 15rem 10rem;
+  opacity: 0.7;
+}
+
+.content {
+  background-color: #FFF;
+  box-shadow: .5rem .5rem 1rem black;
+  padding: 15rem 10rem;
+  opacity: 0.9;
+}
+
+.content-two {
+  background-color: #FFF;
+  box-shadow: .5rem .5rem 1rem black;
+  padding: 10rem 10rem;
+  opacity: 0.9;
+  font-size: 1rem;
+}
+
+.spacer-vh50 {
+  min-height: 50vh;
+}
+
+.pearl-sizer {
+  box-shadow: .5rem .5rem 1rem black;
+  max-width: 50%;
+  max-height: 50%;
+  margin: 3rem 3rem;
+  padding: 1rem
+}
+
+.gardening-sizer {
+  box-shadow: .5rem .5rem 1rem black;
+  max-width: 70%;
+  max-height: 70%;
+  margin: 3rem 2rem;
+  padding: 1rem
+
+}
+
+.watering-sizer {
+  box-shadow: .5rem .5rem 1rem black;
+  max-width: 90%;
+  max-height: 90%;
+  margin: 3rem auto;
+  padding: 1rem
+ 
+}
+
+.happy-sizer {
+  max-width: 120%;
+  max-height: 120%;
+  box-shadow: .5rem .5rem 1rem black;
+  padding: 1rem
+  
 }
