@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button, TextField } from '@material-ui/core'
-import axios from 'axios';
 
 const authUser = {
   username: '',
@@ -16,7 +15,7 @@ const EditUser = () => {
   const history = useHistory();
 
   useEffect(() => {
-    axios()
+    axiosWithAuth()
       .get(`https://water-my-plants-tt101.herokuapp.com/users/plants/${id}`)
       .then(res => {
         setUser(res.data)
@@ -34,7 +33,7 @@ const EditUser = () => {
   const handleSubmit = e => {
     console.log(user);
     e.preventDefault();
-    axios()
+    axiosWithAuth()
       .put(`https://water-my-plants-tt101.herokuapp.com/users/plants/${id}`)
       .then(res => {
         console.log('user was updated', res.data)
