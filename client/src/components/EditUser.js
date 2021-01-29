@@ -17,7 +17,7 @@ const EditUser = () => {
 
   useEffect(() => {
     axios()
-      .get(`https://water-my-plants-tt101.herokuapp.com/users/dashboard/${id}`)
+      .get(`https://water-my-plants-tt101.herokuapp.com/users/plants/${id}`)
       .then(res => {
         setUser(res.data)
       })
@@ -35,7 +35,7 @@ const EditUser = () => {
     console.log(user);
     e.preventDefault();
     axios()
-      .put(`https://water-my-plants-tt101.herokuapp.com/users/dashboard/${id}`)
+      .put(`https://water-my-plants-tt101.herokuapp.com/users/plants/${id}`)
       .then(res => {
         console.log('user was updated', res.data)
         setUser(res.data)
