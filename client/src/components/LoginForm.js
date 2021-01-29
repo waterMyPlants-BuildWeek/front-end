@@ -79,11 +79,14 @@ export default LoginForm
 const Form = styled.form`
     display: grid;
     grid-template-columns: 1fr;
-    border: 1px solid #555;
+    border: 1px solid #ccc;
     border-radius: 5px;
+    min-width: 250px;
     max-width: 300px;
     padding: 1rem;
     gap: .25rem;
+    background-color: #fff;
+    box-shadow: 0 0 3px rgba(0,0,0,.35);
     & h2{
         text-align: center;
     }
