@@ -1,19 +1,28 @@
-import React, { useState, useEffect, createContext } from 'react'
-import { auth } from '../firebase'
+import React, { useState, useEffect, createContext, useReducer } from 'react'
+import { reducer, initialState, LOGIN, LOGOUT, SET_USER } from '../reducers/reducer'
+
 
 export const AuthContext = createContext()
 
 export const AuthProvider = ({children}) => {
     
-    const [currentUser, setCurrentUser] = useState(null)
     const [pending, setPending] = useState(true)
+    const [state, dispatch] = useReducer(reducer, initialState)
 
     useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged(user => {
-            setCurrentUser(user)
-            setPending(false)
-        })
-        return unsubscribe
+        const userId = localStorage.getItem("userId")
+        const email = localStorage.getItem("email")
+        const username = localStorage.getItem("name")
+
+        const loggedUser = {
+            userId,
+            email,
+            username
+        }
+
+        dispatch({type: SET_USER, payload: loggedUser})
+
+        setPending(false)
     },[])
 
     if(pending) {
@@ -23,7 +32,8 @@ export const AuthProvider = ({children}) => {
     return (
         <AuthContext.Provider
             value={{
-                currentUser,
+                state,
+                dispatch
             }}
         >
             {children}

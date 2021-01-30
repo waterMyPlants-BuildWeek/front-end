@@ -1,20 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
 import { Button, TextField } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
-import { auth } from '../firebase'
 import axios from 'axios'
+import { AuthContext } from '../contexts/Auth'
 
 const LoginForm = () => {
 
     const history = useHistory()
+
+    const {dispatch} = useContext(AuthContext)
     
     const initialState = {
         username: '',
         email: '',
         password: ''
     }
-
 
     const [user, setUser] = useState(initialState)
     const [login, setLogin] = useState(true)
@@ -26,42 +27,22 @@ const LoginForm = () => {
         })
     }
 
-    // const onSubmit = (e) => {
-    //     e.preventDefault()
-    //     if(login){
-    //         auth.signInWithEmailAndPassword(user.email,user.password)
-    //             .then(setUser(initialState))
-    //             .then(history.push('/dashboard'))
-    //             .catch(err => alert(err.message))
-    //     } else {
-    //         auth.createUserWithEmailAndPassword(user.email,user.password)
-    //             .then(setUser(initialState))
-    //             .then(history.push('/dashboard'))
-    //             .catch(err => alert(err.message))
-    //     }
-    // }
-
-
-    //WITH AXIOS
-
     const onSubmit = (e) => {
         e.preventDefault()
         if(login){
             axios.post('https://water-my-plants-tt101.herokuapp.com/users/login', user)
-            .then(res => {
-                localStorage.setItem('userToken', res.data.token)
-                console.log(res.data)
+            .then(({data}) => {
+                dispatch({type:'LOGIN', payload: data})
                 setUser(initialState)
+                history.push('/dashboard')
             })
-            .then(history.push('/dashboard'))
         } else {
             axios.post('https://water-my-plants-tt101.herokuapp.com/users/register', user)
-            .then(res => {
-                localStorage.setItem('userToken', res.data.token);
-                console.log(res.data)
+            .then(({data}) => {
+                dispatch({type:'LOGIN', payload: data})
                 setLogin(!login)
+                history.push('/dashboard')
             })
-            .then(history.push('/login'))
 
         }
     }

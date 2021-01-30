@@ -1,27 +1,18 @@
-import React, { useState, useEffect} from 'react'
-import { db } from '../firebase'
+import React from 'react'
 import PlantCard from './PlantCard'
 import styled from 'styled-components'
-import { axiosWithAuth } from '../utils/axiosWithAuth'
 
-const MyPlants = ({uid}) => {
-
-    const [plants, setPlants] = useState([])
-
-    useEffect(() => {
-        axiosWithAuth().get('https://water-my-plants-tt101.herokuapp.com/plants/user/5')
-        .then(({data})=>{
-            setPlants(data)
-        })
-    })
+const MyPlants = ({plants, getPlants}) => {
 
     return (
         <>
             <Heading>My Plants</Heading>
             <Plants>
                 {plants.map(plant => 
-                    <PlantCard key={plant.id}
+                    <PlantCard 
+                        key={plant.id}
                         {...plant}
+                        getPlants={getPlants}
                     />
                 )}
             </Plants>

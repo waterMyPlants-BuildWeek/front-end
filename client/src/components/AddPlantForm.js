@@ -1,23 +1,25 @@
 import { Button, Input, InputLabel, MenuItem, Select, TextField } from '@material-ui/core'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState} from 'react'
 import { AuthContext } from '../contexts/Auth'
 import styled from 'styled-components'
-import { db, storage } from '../firebase'
+import { storage } from '../firebase'
 import { useHistory } from 'react-router-dom'
 import { axiosWithAuth } from '../utils/axiosWithAuth'
+import {formatDate} from '../utils/formatDate'
 
-const AddPlantForm = ({setOpen}) => {
+const AddPlantForm = ({setOpen, getPlants}) => {
 
     const {currentUser} = useContext(AuthContext)
     const history = useHistory()
 
     const initialForm = {
-        user_id: 5,
+        user_id: currentUser.userId,
         nickname: '',
         species: '',
         h2oFrequency: 'Daily',
         image: '',
-        details: ''
+        details: '',
+        last_watered: formatDate(new Date())
     }
 
     const [plant, setPlant] = useState(initialForm)
@@ -28,7 +30,6 @@ const AddPlantForm = ({setOpen}) => {
             ...plant,
             [e.target.name]: e.target.value
         })
-
     }
 
     const frequency = [
@@ -51,26 +52,16 @@ const AddPlantForm = ({setOpen}) => {
     }
  
 
-    // const onSubmit = (e) => {
-    //     e.preventDefault()
-    //     db.collection('plants').add(plant)
-    //     setPlant(initialForm)
-    //     history.push('/dashboard')
-    //     setOpen(false)
-    // }
-
     const onSubmit = (e) => {
         e.preventDefault()
         axiosWithAuth().post('https://water-my-plants-tt101.herokuapp.com/plants/new', plant)
             .then((res) => {
-                console.log(res.data)
                 setPlant(initialForm)
                 history.push('/dashboard')
                 setOpen(false)
+                getPlants()
             })
     }
-
-
 
     return (
         <>
@@ -88,6 +79,15 @@ const AddPlantForm = ({setOpen}) => {
                     label='Plant Species'
                     name='species'
                     value={plant.species}
+                    onChange={handleChange}
+                    variant='outlined'
+                    margin='dense'
+                />
+                <TextField 
+                    label='Last Watered'
+                    type='date'
+                    name='last_watered'
+                    value={plant.last_watered}
                     onChange={handleChange}
                     variant='outlined'
                     margin='dense'

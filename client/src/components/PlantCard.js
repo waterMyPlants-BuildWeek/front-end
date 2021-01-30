@@ -1,9 +1,8 @@
 import { Button, IconButton, Menu, MenuItem } from '@material-ui/core'
 import React, {useState} from 'react'
 import styled from 'styled-components'
-import { db } from '../firebase'
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import {axiosWithAuth} from '../utils/axiosWithAuth'
+import { axiosWithAuth } from '../utils/axiosWithAuth'
 
 const PlantCard = (props) => {
 
@@ -25,11 +24,15 @@ const PlantCard = (props) => {
         image,
         species,
         last_watered,
-        details
+        details,
+        getPlants
      } = props
 
     const deleteItem = (selected) => {
         axiosWithAuth().delete(`https://water-my-plants-tt101.herokuapp.com/plants/${selected}`)
+        .then(res => {
+            getPlants()
+        })
     }
     
     return (
@@ -61,7 +64,7 @@ const PlantCard = (props) => {
             <img src={image} alt='{species}'/>
             <Content>
                 <p><strong>Water Plant:</strong> {h2oFrequency}</p>
-                <p><strong>Last Watered:</strong> 12/23/2020</p>
+                <p><strong>Last Watered:</strong> {last_watered}</p>
             </Content>
             <ButtonGroup>
                 <MyButton color='primary' variant='contained'>Just Watered</MyButton>

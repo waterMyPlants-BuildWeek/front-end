@@ -4,13 +4,14 @@ import { AuthContext } from '../contexts/Auth'
 
 const PrivateRoute = ({component: RouteComponent, ...rest}) => {
 
-    const { currentUser } = useContext(AuthContext)
+    const { currentUser, state } = useContext(AuthContext)
 
     return (
         <Route
             {...rest}
             render={routeProps => 
-                localStorage.getItem("userToken")
+                // localStorage.getItem("userToken")
+                state.isAuthenticated
                 ? (<RouteComponent {...routeProps} />)
                 : (<Redirect to={'/login'} />)
             }      

@@ -3,20 +3,15 @@ import styled from 'styled-components'
 import { Button } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import { AuthContext } from '../contexts/Auth'
-import { auth } from '../firebase'
+import { logout } from '../actions/logout'
 
 
 const Nav = () => {
 
-    const { currentUser } = useContext(AuthContext)
-
-    const signOut = () => {
-        auth.signOut()
-    }
-
+    const { state, dispatch} = useContext(AuthContext)
     const history = useHistory()
 
-    if(!currentUser){return (
+    if(!state.isAuthenticated){return (
         <MyNav>
             <Logo
                 variant='text'
@@ -56,7 +51,7 @@ const Nav = () => {
                     variant='text'
                     onClick={()=> history.push('/dashboard')}    
                 >Dashboard</Button>
-                <Button onClick={signOut}>Sign Out</Button>
+                <Button onClick={() => dispatch(logout())}>Sign Out</Button>
             </Menu>
         </MyNav>
     )
