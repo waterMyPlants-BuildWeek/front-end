@@ -4,6 +4,7 @@ import { Button } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import { AuthContext } from '../contexts/Auth'
 import { auth } from '../firebase'
+import "bootstrap/dist/css/bootstrap.css";
 
 
 const Nav = () => {
@@ -22,7 +23,7 @@ const Nav = () => {
                 variant='text'
                 onClick={()=> history.push('/')}
             >Water My Plants</Logo>
-            <Menu>
+            <Menu className='d-flex justify-content-evenly'>
                 <Button 
                     variant='text' 
                     onClick={()=> history.push('/')}
@@ -38,14 +39,13 @@ const Nav = () => {
     )}
 
     return (
-        <MyNav>
-            <Logo
+        <MyNav className='d-flex align-baseline flex-column justify-content-evenly'>
+            <Logo className='d-flex justify-content-end'
                 variant='text'
                 onClick={()=> history.push('/')}
-            >
-                Water My Plants
+            >Water My Plants
             </Logo>
-            <Menu>
+            <Menu className='d-flex justify-content-end'>
                 <Button 
                     variant='text' 
                     onClick={()=> history.push('/')}
@@ -65,11 +65,11 @@ const Nav = () => {
 export default Nav
 
 const MyNav = styled.div`
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    justify-items: space-between;
+   display: flex
+   justify-items: space-between;
     padding: 0 1rem;
     border-bottom: 1px solid #ccc;
+    background-color: white;
 `
 
 const Menu = styled.div`
@@ -81,7 +81,7 @@ const Menu = styled.div`
 
 const Logo = styled(Button)`
     justify-self: start;
-    font-size: 1.4rem;
+    font-size: 1rem;
 `
 // const Button = styled.button`
 //     justify-self: end;
