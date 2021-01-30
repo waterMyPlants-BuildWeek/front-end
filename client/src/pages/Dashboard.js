@@ -35,18 +35,17 @@ const Dashboard = () => {
 
     return (
         <Wrapper>
-            <div>
-                <h2>Your Details</h2>
-                <h4>{state.user.username}</h4>
-                <h4>{state.user.email}</h4>
-            </div>
+            
+            <div className='d-flex flex-column' style={{backgroundColor: 'white', padding: '1rem 1rem', marginTop: '3rem'}}>
+                <h2>Account: <h4>{state.user.email}</h4></h2>
+      
             <MyButton 
                 variant='contained'
                 color='primary'
                 onClick={handleClickOpen}
             >
                 Add a Plant
-            </MyButton>
+            </MyButton></div>
             <Dialog open={open} onClose={handleClose} aria-labelledby='Add a Plant'>
                 <AddPlantForm setOpen={setOpen} getPlants={getPlants}/>
             </Dialog>
@@ -60,7 +59,6 @@ export default Dashboard
 const Wrapper = styled.div`
     display: grid;
     grid-template-columns: 1fr;
-    padding: 2rem;
     gap: 2rem;
 `
 

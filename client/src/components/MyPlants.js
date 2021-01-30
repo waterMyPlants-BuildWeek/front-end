@@ -23,18 +23,19 @@ const MyPlants = ({plants, getPlants}) => {
 export default MyPlants
 
 const Heading = styled.h2`
-    font-size: 1.8rem;
-    margin: 0;
-    @media (max-width: 600px){
-        text-align: center;  
-    }
-`
+  text-shadow: 0 0 1 white;
+  font-size: 1.8rem;
+  margin: 3rem auto;
+  @media (max-width: 600px) {
+    text-align: center;
+  }
+`;
 
 const Plants = styled.div`
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 350px));
-    gap: 1rem;
-    @media (max-width: 600px){
-        justify-content: center;    
-    }
-`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 350px));
+  gap: 1rem;
+  @media (max-width: 600px) {
+    justify-content: center;
+  }
+`;

@@ -22,8 +22,8 @@ const AddPlantForm = ({setOpen, getPlants}) => {
         last_watered: formatDate(new Date())
     }
 
-    const [plant, setPlant] = useState(initialForm)
-    const [uploading, setUploading] = useState(false)
+  const [plant, setPlant] = useState(initialForm);
+  const [uploading, setUploading] = useState(false);
 
     const handleChange = (e) => {
         setPlant({
@@ -32,25 +32,24 @@ const AddPlantForm = ({setOpen, getPlants}) => {
         })
     }
 
-    const frequency = [
-        {title: 'Daily', value: 1},
-        {title: 'Every other day', value: 2},
-        {title: 'Weekly', value: 7},
-        {title: 'Bi-Weekly', value: 14}
-     ]
+  const frequency = [
+    { title: "Daily", value: 1 },
+    { title: "Every other day", value: 2 },
+    { title: "Weekly", value: 7 },
+    { title: "Bi-Weekly", value: 14 },
+  ];
 
-     const onFileChange = async (e) => {
-        setUploading(true)
-        const file = e.target.files[0]
-        const fileRef = storage.ref(`images/${file.name}`)
-        await fileRef.put(file)
-        setPlant({
-            ...plant, 
-            image: await fileRef.getDownloadURL()
-        })
-        setUploading(false)
-    }
- 
+  const onFileChange = async (e) => {
+    setUploading(true);
+    const file = e.target.files[0];
+    const fileRef = storage.ref(`images/${file.name}`);
+    await fileRef.put(file);
+    setPlant({
+      ...plant,
+      image: await fileRef.getDownloadURL(),
+    });
+    setUploading(false);
+  };
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -127,25 +126,25 @@ const AddPlantForm = ({setOpen, getPlants}) => {
 export default AddPlantForm
 
 const Heading = styled.h2`
-    font-size: 1.8rem;
-    margin: 0;
-    @media (max-width: 600px){
-        text-align: center;  
-    }
-`
+  font-size: 1.8rem;
+  margin: 0;
+  @media (max-width: 600px) {
+    text-align: center;
+  }
+`;
 const Form = styled.form`
-    display: grid;
-    grid-template-columns: 1fr;
-    border: 1px solid #555;
-    border-radius: 5px;
-    max-width: 350px;
-    padding: 2rem;
-    gap: .75rem;
-    & h2{
-        text-align: center;
-    }
-`
+  display: grid;
+  grid-template-columns: 1fr;
+  border: 1px solid #555;
+  border-radius: 5px;
+  max-width: 350px;
+  padding: 2rem;
+  gap: 0.75rem;
+  & h2 {
+    text-align: center;
+  }
+`;
 
 const Upload = styled(Input)`
-    padding: 1rem 0;
-`
+  padding: 1rem 0;
+`;
