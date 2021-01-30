@@ -2,18 +2,18 @@ import React, { useState, useEffect} from 'react'
 import { db } from '../firebase'
 import PlantCard from './PlantCard'
 import styled from 'styled-components'
+import { axiosWithAuth } from '../utils/axiosWithAuth'
 
 const MyPlants = ({uid}) => {
 
     const [plants, setPlants] = useState([])
 
     useEffect(() => {
-        db.collection('plants').where("user", "==", uid).onSnapshot(snapshot => 
-            {
-                let data = snapshot.docs.map(doc => ({...doc.data(), id: doc.id}))
-                setPlants(data)
-            })
-    },[])
+        axiosWithAuth().get('https://water-my-plants-tt101.herokuapp.com/plants/user/5')
+        .then(({data})=>{
+            setPlants(data)
+        })
+    })
 
     return (
         <>

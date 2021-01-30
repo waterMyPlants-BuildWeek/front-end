@@ -3,6 +3,7 @@ import React, {useState} from 'react'
 import styled from 'styled-components'
 import { db } from '../firebase'
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import {axiosWithAuth} from '../utils/axiosWithAuth'
 
 const PlantCard = (props) => {
 
@@ -22,15 +23,13 @@ const PlantCard = (props) => {
         h2oFrequency,
         id,
         image,
-        species
+        species,
+        last_watered,
+        details
      } = props
 
-    //  const deleteItem = (collection, item) => {
-    //     db.collection(collection).doc(item.id).delete()
-    //   }
-
     const deleteItem = (selected) => {
-        db.collection('plants').doc(selected).delete()
+        axiosWithAuth().delete(`https://water-my-plants-tt101.herokuapp.com/plants/${selected}`)
     }
     
     return (

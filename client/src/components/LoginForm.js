@@ -15,6 +15,7 @@ const LoginForm = () => {
         password: ''
     }
 
+
     const [user, setUser] = useState(initialState)
     const [login, setLogin] = useState(true)
 
@@ -49,6 +50,7 @@ const LoginForm = () => {
             axios.post('https://water-my-plants-tt101.herokuapp.com/users/login', user)
             .then(res => {
                 localStorage.setItem('userToken', res.data.token)
+                console.log(res.data)
                 setUser(initialState)
             })
             .then(history.push('/dashboard'))
@@ -56,6 +58,7 @@ const LoginForm = () => {
             axios.post('https://water-my-plants-tt101.herokuapp.com/users/register', user)
             .then(res => {
                 localStorage.setItem('userToken', res.data.token);
+                console.log(res.data)
                 setLogin(!login)
             })
             .then(history.push('/login'))

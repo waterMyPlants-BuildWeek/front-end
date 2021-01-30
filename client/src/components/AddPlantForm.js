@@ -4,6 +4,7 @@ import { AuthContext } from '../contexts/Auth'
 import styled from 'styled-components'
 import { db, storage } from '../firebase'
 import { useHistory } from 'react-router-dom'
+import { axiosWithAuth } from '../utils/axiosWithAuth'
 
 const AddPlantForm = ({setOpen}) => {
 
@@ -11,11 +12,12 @@ const AddPlantForm = ({setOpen}) => {
     const history = useHistory()
 
     const initialForm = {
-        user: currentUser.uid,
+        user_id: 5,
         nickname: '',
         species: '',
         h2oFrequency: 'Daily',
-        image: ''
+        image: '',
+        details: ''
     }
 
     const [plant, setPlant] = useState(initialForm)
@@ -49,12 +51,23 @@ const AddPlantForm = ({setOpen}) => {
     }
  
 
+    // const onSubmit = (e) => {
+    //     e.preventDefault()
+    //     db.collection('plants').add(plant)
+    //     setPlant(initialForm)
+    //     history.push('/dashboard')
+    //     setOpen(false)
+    // }
+
     const onSubmit = (e) => {
         e.preventDefault()
-        db.collection('plants').add(plant)
-        setPlant(initialForm)
-        history.push('/dashboard')
-        setOpen(false)
+        axiosWithAuth().post('https://water-my-plants-tt101.herokuapp.com/plants/new', plant)
+            .then((res) => {
+                console.log(res.data)
+                setPlant(initialForm)
+                history.push('/dashboard')
+                setOpen(false)
+            })
     }
 
 
