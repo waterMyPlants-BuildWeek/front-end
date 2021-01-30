@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
 import { Button, TextField } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
-import { auth } from '../firebase'
+import axios from 'axios'
+import { AuthContext } from '../contexts/Auth'
+import { userLogin } from '../actions/userLogin'
 
 const LoginForm = () => {
 
     const history = useHistory()
+
+    const {dispatch} = useContext(AuthContext)
     
     const initialState = {
         username: '',
@@ -27,15 +31,20 @@ const LoginForm = () => {
     const onSubmit = (e) => {
         e.preventDefault()
         if(login){
-            auth.signInWithEmailAndPassword(user.email,user.password)
-                .then(setUser(initialState))
-                .then(history.push('/dashboard'))
-                .catch(err => alert(err.message))
+            axios.post('https://water-my-plants-tt101.herokuapp.com/users/login', user)
+            .then(({data}) => {
+                dispatch(userLogin(data))
+                setUser(initialState)
+                history.push('/dashboard')
+            })
         } else {
-            auth.createUserWithEmailAndPassword(user.email,user.password)
-                .then(setUser(initialState))
-                .then(history.push('/dashboard'))
-                .catch(err => alert(err.message))
+            axios.post('https://water-my-plants-tt101.herokuapp.com/users/register', user)
+            .then(({data}) => {
+                dispatch(userLogin(data))
+                setLogin(!login)
+                history.push('/dashboard')
+            })
+
         }
     }
 
@@ -44,6 +53,15 @@ const LoginForm = () => {
         <>
         <Form onSubmit={onSubmit}>
             <h2>{login ? 'Login' : 'Sign Up'}</h2> 
+            <TextField
+                type='text'
+                name='username'
+                value={user.username}
+                onChange={handleChange} 
+                variant='outlined'
+                label='username'
+                margin='dense'
+            />
             <TextField
                 name='email'
                 type='email'
@@ -64,12 +82,13 @@ const LoginForm = () => {
             />
             <Button
                 type='submit' 
-                variant='outlined'
+                variant='contained'
+                color='primary'
             >
                 {login ? 'Login' : 'Sign Up'}
             </Button>
         </Form>
-        <Button color='primary' onClick={()=> setLogin(!login)}>{login ? 'Sign Up' : 'Log In'}</Button>
+        <Button color='secondary' size='small' variant='contained' onClick={()=> setLogin(!login)}>{login ? 'Go to Sign Up' : 'Go to Log In'}</Button>
         </>
     )
 }

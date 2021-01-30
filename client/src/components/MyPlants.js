@@ -1,35 +1,26 @@
-import React, { useState, useEffect } from "react";
-import { db } from "../firebase";
-import PlantCard from "./PlantCard";
-import styled from "styled-components";
+import React from 'react'
+import PlantCard from './PlantCard'
+import styled from 'styled-components'
 
-const MyPlants = ({ uid }) => {
-  const [plants, setPlants] = useState([]);
+const MyPlants = ({plants, getPlants}) => {
 
-  useEffect(() => {
-    db.collection("plants")
-      .where("user", "==", uid)
-      .onSnapshot((snapshot) => {
-        let data = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-        setPlants(data);
-      });
-  }, [uid]);
+    return (
+        <>
+            <Heading>My Plants</Heading>
+            <Plants>
+                {plants.plants.map(plant => 
+                    <PlantCard 
+                        key={plant.id}
+                        {...plant}
+                        getPlants={getPlants}
+                    />
+                )}
+            </Plants>
+        </>
+    )
+}
 
-  return (
-    <div className='d-flex flex-column'>
-      <Heading>My Plants</Heading>
-      <div>
-        <Plants>
-          {plants.map((plant) => (
-            <PlantCard key={plant.id} {...plant} />
-          ))}
-        </Plants>
-      </div>
-    </div>
-  );
-};
-
-export default MyPlants;
+export default MyPlants
 
 const Heading = styled.h2`
   text-shadow: 0 0 1 white;
