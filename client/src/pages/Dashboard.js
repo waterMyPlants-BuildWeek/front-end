@@ -1,9 +1,10 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import AddPlantForm from '../components/AddPlantForm'
 import MyPlants from '../components/MyPlants'
 import { AuthContext } from '../contexts/Auth'
 import styled from 'styled-components'
 import { Button, Dialog } from '@material-ui/core'
+import { axiosWithAuth } from '../utils/axiosWithAuth'
 
 const Dashboard = () => {
 
@@ -17,6 +18,14 @@ const Dashboard = () => {
     // const handleClose = () => {
     //     setOpen(false)
     // }
+
+    useEffect(()=> {
+        axiosWithAuth().get('https://water-my-plants-tt101.herokuapp.com/plants/')
+        .then((res) => { 
+            console.log(res.data)
+        })
+        .catch(err => console.log(err.message))
+    })
 
     return (
         <Wrapper>
