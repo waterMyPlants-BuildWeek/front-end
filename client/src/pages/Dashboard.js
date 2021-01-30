@@ -5,12 +5,16 @@ import { AuthContext } from '../contexts/Auth'
 import styled from 'styled-components'
 import { Button, Dialog } from '@material-ui/core'
 import { getUserPlants } from '../api/getUserPlants'
+import { PlantContext } from '../contexts/Plants'
+import { getPlantsAction } from '../actions/getPlantsAction'
+
 
 const Dashboard = () => {
 
     const { state } = useContext(AuthContext)
+    const { plants, dispatch} = useContext(PlantContext)
     const [open, setOpen] = useState(false)
-    const [plants, setPlants] = useState([])
+    // const [plants, setPlants] = useState([])
 
     const handleClickOpen = () => {
         setOpen(true)
@@ -22,8 +26,8 @@ const Dashboard = () => {
     
     const getPlants = useCallback(async () => {
         const results = await getUserPlants(state.user.userId)
-        setPlants(results)
-    },[state.user])
+        dispatch(getPlantsAction(results))
+    },[state.user, dispatch])
 
     useEffect(() => {
         getPlants()

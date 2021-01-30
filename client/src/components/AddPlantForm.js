@@ -9,11 +9,11 @@ import {formatDate} from '../utils/formatDate'
 
 const AddPlantForm = ({setOpen, getPlants}) => {
 
-    const {currentUser} = useContext(AuthContext)
+    const {state} = useContext(AuthContext)
     const history = useHistory()
 
     const initialForm = {
-        user_id: currentUser.userId,
+        user_id: state.user.userId,
         nickname: '',
         species: '',
         h2oFrequency: 'Daily',

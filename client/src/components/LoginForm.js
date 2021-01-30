@@ -4,6 +4,7 @@ import { Button, TextField } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 import { AuthContext } from '../contexts/Auth'
+import { userLogin } from '../actions/userLogin'
 
 const LoginForm = () => {
 
@@ -32,14 +33,14 @@ const LoginForm = () => {
         if(login){
             axios.post('https://water-my-plants-tt101.herokuapp.com/users/login', user)
             .then(({data}) => {
-                dispatch({type:'LOGIN', payload: data})
+                dispatch(userLogin(data))
                 setUser(initialState)
                 history.push('/dashboard')
             })
         } else {
             axios.post('https://water-my-plants-tt101.herokuapp.com/users/register', user)
             .then(({data}) => {
-                dispatch({type:'LOGIN', payload: data})
+                dispatch(userLogin(data))
                 setLogin(!login)
                 history.push('/dashboard')
             })

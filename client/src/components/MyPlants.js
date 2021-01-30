@@ -8,7 +8,7 @@ const MyPlants = ({plants, getPlants}) => {
         <>
             <Heading>My Plants</Heading>
             <Plants>
-                {plants.map(plant => 
+                {plants.plants.map(plant => 
                     <PlantCard 
                         key={plant.id}
                         {...plant}

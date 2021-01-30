@@ -65,6 +65,7 @@ const PlantCard = (props) => {
             <Content>
                 <p><strong>Water Plant:</strong> {h2oFrequency}</p>
                 <p><strong>Last Watered:</strong> {last_watered}</p>
+                <p>{details}</p>
             </Content>
             <ButtonGroup>
                 <MyButton color='primary' variant='contained'>Just Watered</MyButton>

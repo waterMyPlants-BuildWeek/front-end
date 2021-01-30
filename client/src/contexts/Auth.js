@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext, useReducer } from 'react'
-import { reducer, initialState, LOGIN, LOGOUT, SET_USER } from '../reducers/reducer'
+import { userReducer, initialState, SET_USER } from '../reducers/userReducer'
 
 
 export const AuthContext = createContext()
@@ -7,7 +7,7 @@ export const AuthContext = createContext()
 export const AuthProvider = ({children}) => {
     
     const [pending, setPending] = useState(true)
-    const [state, dispatch] = useReducer(reducer, initialState)
+    const [state, dispatch] = useReducer(userReducer, initialState)
 
     useEffect(() => {
         const userId = localStorage.getItem("userId")
