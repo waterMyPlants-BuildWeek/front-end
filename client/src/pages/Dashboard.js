@@ -7,14 +7,15 @@ import { Button, Dialog } from '@material-ui/core'
 import { getUserPlants } from '../api/getUserPlants'
 import { PlantContext } from '../contexts/Plants'
 import { getPlantsAction } from '../actions/getPlantsAction'
+import EditUser from '../components/EditUser'
+import { editingUser } from '../actions/editingUser'
 
 
 const Dashboard = () => {
 
-    const { state } = useContext(AuthContext)
-    const { plants, dispatch} = useContext(PlantContext)
+    const { state, dispatch } = useContext(AuthContext)
+    const { plants, plantDispatch} = useContext(PlantContext)
     const [open, setOpen] = useState(false)
-    // const [plants, setPlants] = useState([])
 
     const handleClickOpen = () => {
         setOpen(true)
@@ -26,8 +27,8 @@ const Dashboard = () => {
     
     const getPlants = useCallback(async () => {
         const results = await getUserPlants(state.user.userId)
-        dispatch(getPlantsAction(results))
-    },[state.user, dispatch])
+        plantDispatch(getPlantsAction(results))
+    },[state.user, plantDispatch])
 
     useEffect(() => {
         getPlants()
@@ -37,7 +38,15 @@ const Dashboard = () => {
         <Wrapper>
             
             <div className='d-flex flex-column' style={{backgroundColor: 'white', padding: '1rem 1rem', marginTop: '3rem'}}>
-                <h2>Account: <h4>{state.user.email}</h4></h2>
+                <h2>Account:</h2> 
+                    <h6>Username: {state.user.username}</h6>
+                    <h6>Email: {state.user.email}</h6>
+                    <Button variant='outlined' onClick={()=>dispatch(editingUser())}>
+                        {state.editingUser 
+                        ? 'Cancel Editing'
+                        : 'Edit User Details'
+                        }
+                        </Button>
       
             <MyButton 
                 variant='contained'
@@ -46,6 +55,7 @@ const Dashboard = () => {
             >
                 Add a Plant
             </MyButton></div>
+            <EditUser />
             <Dialog open={open} onClose={handleClose} aria-labelledby='Add a Plant'>
                 <AddPlantForm setOpen={setOpen} getPlants={getPlants}/>
             </Dialog>

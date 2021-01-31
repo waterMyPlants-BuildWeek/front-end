@@ -5,13 +5,13 @@ export const PlantContext = createContext()
 
 export const PlantsProvider = ({children}) => {
 
-    const [plants, dispatch] = useReducer(plantReducer, initialState)
+    const [plants, plantDispatch] = useReducer(plantReducer, initialState)
 
     return(
         <PlantContext.Provider
             value={{
                 plants,
-                dispatch
+                plantDispatch
             }}
         >
             {children}
