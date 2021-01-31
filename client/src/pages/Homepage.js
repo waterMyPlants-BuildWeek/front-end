@@ -1,31 +1,85 @@
-import { Button } from "@material-ui/core";
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import styled from "styled-components";
 import pearls from "./images/pearls.jpg";
 import gardening from "./images/gardening.jpg";
 import watering from "./images/watering.jpg";
 import watering2 from "./images/watering2.jpg";
+import logo from "./images/logo.png";
+import { TweenMax, Power3 } from "gsap";
 import "bootstrap/dist/css/bootstrap.css";
+
 
 const Homepage = () => {
   const history = useHistory();
 
+  let logoIcon = useRef(null);
+  let tagLine = useRef(null);
+  //console.log(logoIcon);
+
+  useEffect(() => {
+    //console.log(logoIcon)
+    TweenMax.from(
+      logoIcon, //item
+      3, // duration
+      {
+        //gsap options
+        opacity: 0,
+        y: -200,
+        ease: Power3.easeInOut,
+      }
+    );
+  }, []);
+
+  useEffect(() => {
+    TweenMax.from(
+        tagLine,
+        3,
+        {
+            opacity: 0,
+            y: -600,
+            ease: Power3.easeInOut,
+        }
+    )
+  }, [])
+
   return (
-    <Wrapper>
-      <div className="title d-flex flex-column justify-content-center align-items-center">
-        <h1 className="display-1">Water My Plants</h1>
-        <h3>Your Personal Plant Watering Reminder Tool</h3>
+    <div className="d-flex flex-column justify-content-center">
+      <div className="title d-flex flex-column justify-content-start align-items-center">
+        <img
+          ref={(element) => {
+            logoIcon = element;
+          }}
+          src={logo}
+          alt="logo"
+          className="logo-sizer"
+        ></img>
+        <h5
+          ref={(element) => {
+            tagLine = element;
+          }}
+          style={{
+            fontSize: "1rem",
+            marginBottom: "5rem",
+            marginTop: '-2rem',
+            textAlign: "center",
+          }}
+        >
+          Your Personal Plant Watering Reminder Tool
+        </h5>
       </div>
       <div className="spacer-vh50"></div>
       <div className="content-two d-flex flex-column justify-content-around align-items-center">
-        <h3 style={{ marginBottom: "1.5rem" }}>Welcome To Water My Plants</h3>
+        <h3 style={{ margin: "3rem auto", textAlign: "center" }}>
+          Welcome To Water My Plants
+        </h3>
+
         <img
           src={gardening}
           className="gardening-sizer"
           alt="child gardening"
         />
-        <p>
+
+        <p style={{ textAlign: "justify" }}>
           <strong>Water My Plants </strong>
           is a free app that reminds to you water your plants no matter how big
           or how small. Whether you frequently forget to water your plants and
@@ -35,9 +89,11 @@ const Homepage = () => {
         </p>
       </div>
       <div className="spacer-vh50"></div>
-      <div className="content-two d-flex flex-row justify-content-around align-items-center">
-        <p>
-          <h3 style={{ marginBottom: "1.5rem" }}>What is Water My Plants</h3>
+      <div className="content-flex">
+        <p style={{ textAlign: "justify" }}>
+          <h3 style={{ marginBottom: "1.5rem", textAlign: "center" }}>
+            What is Water My Plants
+          </h3>
           Water My Plants is a free app that reminds to you water your plants no
           matter how big or how small. Whether you frequently forget to water
           your plants and precious flowers at your home/ office or you would
@@ -85,24 +141,16 @@ const Homepage = () => {
       <div className="content-two d-flex flex-row justify-content-around align-items-center">
         <img src={watering2} className="happy-sizer" alt="happy gardener" />
       </div>
-      <Button
+      <button
+        className="btn btn-outline-dark"
         style={{ margin: "5rem" }}
         variant="contained"
         onClick={() => history.push("/dashboard")}
       >
         Sign in/ Sign up
-      </Button>
-    </Wrapper>
-
+      </button>
+    </div>
   );
 };
 
 export default Homepage;
-
-const Wrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-  padding: 2rem;
-  gap: 1rem;
-  justify-items: center;
-`;

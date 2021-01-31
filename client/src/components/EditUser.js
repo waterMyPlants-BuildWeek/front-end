@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { Button, TextField } from '@material-ui/core'
+import { Button, TextField } from '@material-ui/core';
+import { axiosWithAuth } from "../utils/axiosWithAuth";
+import { connect } from "react-redux";
+import { editUser } from "../actions/editUser";
+
 
 const authUser = {
   username: '',
@@ -16,7 +20,7 @@ const EditUser = () => {
 
   useEffect(() => {
     axiosWithAuth()
-      .get(`https://water-my-plants-tt101.herokuapp.com/users/plants/${id}`)
+      .get(`https://water-my-plants-tt101.herokuapp.com/users/${id}`)
       .then(res => {
         setUser(res.data)
       })
@@ -33,22 +37,24 @@ const EditUser = () => {
   const handleSubmit = e => {
     console.log(user);
     e.preventDefault();
-    axiosWithAuth()
-      .put(`https://water-my-plants-tt101.herokuapp.com/users/plants/${id}`)
-      .then(res => {
-        console.log('user was updated', res.data)
-        setUser(res.data)
-        history.push(`/dashboard/${id}`)
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    editUser();
+    history.push(`/dashboard/${id}`)
   };
 
   return (
     <div>
       <Form onSubmit={handleSubmit}>
         <h2>Edit Your User Info</h2>
+        <TextField readonly
+            name="username"
+            type="text"
+            id="username"
+            value={user.username}
+            onChange={handleChange}
+            placeholder={user.username}
+
+          />
+
           <TextField
             name="email"
             type="email"
@@ -73,7 +79,7 @@ const EditUser = () => {
 
 }
 
-export default EditUser;
+export default connect(null, {editUser})(EditUser);
 
 const Form = styled.form`
     display: grid;

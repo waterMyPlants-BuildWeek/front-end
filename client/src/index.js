@@ -3,12 +3,18 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import CssBaseline from '@material-ui/core/CssBaseline'
+import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import { Provider } from "react-redux";
+import { rootReducer } from "./reducers/";
+
+const store = createStore(rootReducer);
 
 ReactDOM.render(
-      <React.StrictMode>
+      <Provider store={store}>
         <CssBaseline />
         <App />
-      </React.StrictMode>,
+      </Provider>,
   document.getElementById('root')
 );
 
