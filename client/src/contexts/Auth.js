@@ -23,7 +23,6 @@ export const AuthProvider = ({children}) => {
         dispatch({type: SET_USER, payload: loggedUser})
 
         setPending(false)
-        console.log('hi')
     },[])
 
     if(pending) {
