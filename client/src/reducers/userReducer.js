@@ -1,8 +1,11 @@
 export const LOGIN = 'LOGIN'
 export const LOGOUT = 'LOGOUT'
 export const SET_USER = 'SET_USER'
+export const EDITING_USER = 'EDITING_USER'
+export const UPDATE_USER = 'UPDATE_USER'
 
 export const initialState = {
+    editingUser: false,
     isAuthenticated: false,
     user: null,
     token: null
@@ -39,6 +42,20 @@ export const userReducer = (state, action) => {
                 ...state,
                 isAuthenticated: true,
                 user: action.payload
+            }
+        case EDITING_USER:
+            return {
+                ...state,
+                editingUser: !state.editingUser,
+            }
+        case UPDATE_USER:
+            localStorage.setItem('userId', Number(action.payload.userId))
+            localStorage.setItem('email', action.payload.email)
+            localStorage.setItem('username', action.payload.username)
+            return{
+                ...state,
+                user: action.payload,
+                editingUser: false,
             }
         default:
             return state;

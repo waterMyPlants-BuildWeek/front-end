@@ -12,7 +12,7 @@ export const AuthProvider = ({children}) => {
     useEffect(() => {
         const userId = localStorage.getItem("userId")
         const email = localStorage.getItem("email")
-        const username = localStorage.getItem("name")
+        const username = localStorage.getItem("username")
 
         const loggedUser = {
             userId,
@@ -23,6 +23,7 @@ export const AuthProvider = ({children}) => {
         dispatch({type: SET_USER, payload: loggedUser})
 
         setPending(false)
+        console.log('hi')
     },[])
 
     if(pending) {
