@@ -53,7 +53,7 @@ const Dashboard = () => {
 
         if(state.editingUser){
             return(
-                <EditUser />
+                <EditUser setOpen={setOpen} />
             )
         } 
 
