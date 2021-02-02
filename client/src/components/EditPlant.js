@@ -1,12 +1,10 @@
-import React, { useState, useContext, useEffect, useCallback } from 'react';
+import React, { useState, useContext, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import { Button, TextField, Input, InputLabel, Select, MenuItem } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { PlantContext } from '../contexts/Plants';
 import { getPlantsAction } from '../actions/getPlantsAction';
-import { editingPlant } from '../actions/editingPlant'
 import { axiosWithAuth } from '../utils/axiosWithAuth';
-import {formatDate} from '../utils/formatDate';
 import { storage } from '../firebase'
 import { AuthContext } from '../contexts/Auth'
 import { clearSelected } from '../actions/clearSelected'
@@ -19,7 +17,8 @@ const EditPlant = () => {
   const {plants, plantDispatch} = useContext(PlantContext);
   const {state} = useContext(AuthContext);
 
-  const initialState = {
+  const initialState = useMemo(() => {
+    return {
     user_id: state.user.userId,
     nickname: plants.selectedPlant.nickname,
     species: plants.selectedPlant.species,
@@ -28,10 +27,10 @@ const EditPlant = () => {
     details: plants.selectedPlant.details,
     last_watered: plants.selectedPlant.last_watered,
     id: plants.selectedPlant.id
-  }
+    }
+  },[plants, state.user])
 
    
-  
   const [plant, setPlant] = useState(initialState);
   const [uploading, setUploading] = useState(false);
 
@@ -44,7 +43,8 @@ const EditPlant = () => {
 
   useEffect(() => {
     setPlant(initialState)
-  }, [plants]) 
+    console.log('hi')
+  }, [initialState]) 
 
   const frequency = [
     { title: "Daily", value: 1 },
@@ -65,19 +65,19 @@ const EditPlant = () => {
     setUploading(false);
   };
 
-  const getPlants = useCallback(async () => {
+  const getPlants = async () => {
     const results = await getUserPlants(state.user.userId)
     plantDispatch(getPlantsAction(results))
-},[state.user, plantDispatch])
+  }
 
   const handleSubmit = e => {
     e.preventDefault();
     axiosWithAuth()
-    .put(`https://water-my-plants-tt101.herokuapp.com/plants/${plants.selectedPlant.id}`, plant)
-    .then(({data}) => {
-      plantDispatch(clearSelected())
-      history.push('/dashboard')
-      getPlants()
+      .put(`https://water-my-plants-tt101.herokuapp.com/plants/${plants.selectedPlant.id}`, plant)
+      .then(({data}) => {
+        plantDispatch(clearSelected())
+        history.push('/dashboard')
+        getPlants()
     })
   }
 
@@ -123,7 +123,7 @@ const EditPlant = () => {
           margin='dense'
         >
           {frequency.map(item => 
-            <MenuItem value={item.title}>{item.title}</MenuItem>    
+            <MenuItem key={item.title} value={item.title}>{item.title}</MenuItem>    
         )}
         </Select>
         <InputLabel id='image'>Plant Image
@@ -137,6 +137,7 @@ const EditPlant = () => {
             Update Plant
         </Button>
         <Button 
+            disabled={uploading}
             variant='outlined'
             onClick={()=> plantDispatch(clearSelected())}
         >

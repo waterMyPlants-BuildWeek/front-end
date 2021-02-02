@@ -10,7 +10,6 @@ const PrivateRoute = ({component: RouteComponent, ...rest}) => {
         <Route
             {...rest}
             render={routeProps => 
-                // localStorage.getItem("userToken")
                 state.isAuthenticated
                 ? (<RouteComponent {...routeProps} />)
                 : (<Redirect to={'/login'} />)

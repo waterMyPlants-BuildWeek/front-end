@@ -103,7 +103,7 @@ const AddPlantForm = ({setOpen, getPlants}) => {
                     
                 >
                     {frequency.map(item => 
-                        <MenuItem value={item.title}>{item.title}</MenuItem>    
+                        <MenuItem key={item.title} value={item.title}>{item.title}</MenuItem>    
                     )}
                 </Select>
                 <InputLabel id='image'>Plant Image

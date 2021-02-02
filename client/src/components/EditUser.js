@@ -7,7 +7,7 @@ import { updateUser } from '../actions/updateUser'
 import { axiosWithAuth } from '../utils/axiosWithAuth'
 import { editingUser } from '../actions/editingUser'
 
-const EditUser = () => {
+const EditUser = ({setOpen}) => {
 
     const history = useHistory()
 
@@ -35,6 +35,7 @@ const EditUser = () => {
             .then(({data}) => {
                 console.log(user)
                 dispatch(updateUser(user))
+                setOpen(false)
                 history.push('/dashboard')
             })
     }
