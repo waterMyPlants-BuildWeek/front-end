@@ -43,7 +43,6 @@ const EditPlant = () => {
   }
 
   useEffect(() => {
-    console.log(plants.selectedPlant)
     setPlant(initialState)
   }, [plants]) 
 

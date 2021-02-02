@@ -5,6 +5,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { axiosWithAuth } from '../utils/axiosWithAuth'
 import { selectedPlant } from '../actions/selectedPlant'
 import { PlantContext } from '../contexts/Plants'
+import { formatDate } from '../utils/formatDate'
 
 const PlantCard = (props) => {
 
@@ -37,7 +38,18 @@ const PlantCard = (props) => {
             getPlants()
         })
     }
-    
+
+    const justWatered = () => {
+        const newPlant = ({...props, last_watered: formatDate(new Date())})
+
+        axiosWithAuth()
+            .put(`https://water-my-plants-tt101.herokuapp.com/plants/${props.id}`, newPlant)
+            .then(res => getPlants())
+            .catch(err => console.log(err))
+    }
+
+
+
     return (
         <Card>
             <Header>
@@ -71,7 +83,13 @@ const PlantCard = (props) => {
                 <p>{details}</p>
             </Content>
             <ButtonGroup>
-                <MyButton color='primary' variant='contained'>Just Watered</MyButton>
+                <MyButton 
+                    color='primary' 
+                    variant='contained'
+                    onClick={justWatered}
+                >
+                        Just Watered
+                </MyButton>
             </ButtonGroup>
         </Card>
     )
