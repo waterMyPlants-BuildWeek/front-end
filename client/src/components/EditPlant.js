@@ -19,6 +19,8 @@ const EditPlant = () => {
   const {plants, plantDispatch} = useContext(PlantContext);
   const {state} = useContext(AuthContext);
 
+  console.log(editingPlant, formatDate);
+
   const initialState = {
     user_id: state.user.userId,
     nickname: plants.selectedPlant.nickname,
@@ -35,6 +37,8 @@ const EditPlant = () => {
   const [plant, setPlant] = useState(initialState);
   const [uploading, setUploading] = useState(false);
 
+  console.log(uploading)
+
   const handleChange = e => {
     setPlant({
         ...plant,
@@ -44,7 +48,7 @@ const EditPlant = () => {
 
   useEffect(() => {
     setPlant(initialState)
-  }, [plants]) 
+  }, [plant]) 
 
   const frequency = [
     { title: "Daily", value: 1 },
