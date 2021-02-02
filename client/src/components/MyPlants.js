@@ -1,11 +1,13 @@
 import React from 'react'
 import PlantCard from './PlantCard'
 import styled from 'styled-components'
+import EditPlant from './EditPlant'
 
 const MyPlants = ({plants, getPlants}) => {
 
     return (
         <>
+        <EditPlant />
             <Heading>My Plants</Heading>
             <Plants>
                 {plants.plants.map(plant => 

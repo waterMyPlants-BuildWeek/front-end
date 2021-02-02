@@ -1,11 +1,14 @@
 import { Button, IconButton, Menu, MenuItem } from '@material-ui/core'
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import styled from 'styled-components'
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { axiosWithAuth } from '../utils/axiosWithAuth'
+import { selectedPlant } from '../actions/selectedPlant'
+import { PlantContext } from '../contexts/Plants'
 
 const PlantCard = (props) => {
 
+    const { plantDispatch } = useContext(PlantContext);
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
   
@@ -57,7 +60,7 @@ const PlantCard = (props) => {
                 open={open}
                 onClose={handleClose}
                 >
-                    <MenuItem>Edit Plant</MenuItem>
+                    <MenuItem onClick={() => plantDispatch(selectedPlant(props))}>Edit Plant</MenuItem>
                     <MenuItem onClick={() => deleteItem(id)}>Delete Plant</MenuItem>
                 </Menu>
             </Header>
