@@ -71,7 +71,7 @@ const PlantCard = (props) => {
                 <p>{details}</p>
             </Content>
             <ButtonGroup>
-                <MyButton color='dark' variant='contained'>Just Watered</MyButton>
+                <MyButton color='primary' variant='contained'>Just Watered</MyButton>
             </ButtonGroup>
         </Card>
     )
