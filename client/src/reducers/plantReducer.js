@@ -33,7 +33,8 @@ export const plantReducer = (state, action) => {
         case SELECTED_PLANT:
             return{
                 ...state,
-                selectedPlant: action.payload
+                selectedPlant: action.payload,
+                editing: true
             }
         case CLEAR_SELECTED:
             return{
