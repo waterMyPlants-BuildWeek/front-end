@@ -23,7 +23,6 @@ export const userReducer = (state, action) => {
                 isAuthenticated: true,
                 user: {
                     userId: action.payload.payload.userId,
-                    email: action.payload.payload.email,
                     username: action.payload.payload.username
                 }
             }
