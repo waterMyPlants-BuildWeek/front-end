@@ -1,5 +1,5 @@
 import { Button, IconButton, Menu, MenuItem } from '@material-ui/core'
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import styled from 'styled-components'
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { axiosWithAuth } from '../utils/axiosWithAuth'
@@ -11,7 +11,7 @@ import { decodeFrequency } from '../utils/decodeFrequency';
 
 const PlantCard = (props) => {
 
-    const { plantDispatch } = useContext(PlantContext);
+    const { plants, plantDispatch } = useContext(PlantContext);
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
   
@@ -22,6 +22,12 @@ const PlantCard = (props) => {
     const handleClose = () => {
       setAnchorEl(null);
     };
+
+    useEffect(() => {
+        if (!plants.editing){
+             handleClose()
+        }   
+    }, [plants.editing])
 
     const { 
         nickname,
