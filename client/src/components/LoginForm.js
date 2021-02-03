@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
-import { Button, TextField } from '@material-ui/core'
+import { Button, LinearProgress, TextField } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 import { AuthContext } from '../contexts/Auth'
@@ -20,6 +20,7 @@ const LoginForm = () => {
 
     const [user, setUser] = useState(initialState)
     const [login, setLogin] = useState(true)
+    const [fetching, setFetching] = useState(false)
 
     const handleChange = (e) => {
         setUser({
@@ -30,20 +31,25 @@ const LoginForm = () => {
 
     const onSubmit = (e) => {
         e.preventDefault()
+        setFetching(true)
         if(login){
             axios.post('https://water-my-plants-tt101.herokuapp.com/users/login', user)
             .then(({data}) => {
                 dispatch(userLogin(data))
                 setUser(initialState)
                 history.push('/dashboard')
+                setFetching(false)
             })
+            .catch((err) => console.log(err))
         } else {
             axios.post('https://water-my-plants-tt101.herokuapp.com/users/register', user)
             .then(({data}) => {
                 dispatch(userLogin(data))
                 setLogin(!login)
                 history.push('/dashboard')
+                setFetching(false)
             })
+            .catch(err => console.log(err.message))
 
         }
     }
@@ -62,6 +68,7 @@ const LoginForm = () => {
                 label='username'
                 margin='dense'
             />
+            { !login ?
             <TextField
                 name='email'
                 type='email'
@@ -71,6 +78,8 @@ const LoginForm = () => {
                 label='email'
                 margin='dense'
             />
+            : <></>
+            }
             <TextField
                 name='password'
                 type='password'
@@ -87,6 +96,10 @@ const LoginForm = () => {
             >
                 {login ? 'Login' : 'Sign Up'}
             </Button>
+            {fetching 
+            ? <LinearProgress color='secondary' />
+            : <></>
+            }
         </Form>
         <Button color='secondary' size='small' variant='contained' onClick={()=> setLogin(!login)}>{login ? 'Go to Sign Up' : 'Go to Log In'}</Button>
         </>

@@ -1,4 +1,4 @@
-import { Button, Input, InputLabel, MenuItem, Select, TextField } from '@material-ui/core'
+import { Button, Input, InputLabel, LinearProgress, MenuItem, Select, TextField } from '@material-ui/core'
 import React, { useContext, useState} from 'react'
 import { AuthContext } from '../contexts/Auth'
 import styled from 'styled-components'
@@ -24,6 +24,7 @@ const AddPlantForm = ({setOpen, getPlants}) => {
 
   const [plant, setPlant] = useState(initialForm);
   const [uploading, setUploading] = useState(false);
+  const [fetching, setFetching] = useState(false)
 
     const handleChange = (e) => {
         setPlant({
@@ -52,6 +53,7 @@ const AddPlantForm = ({setOpen, getPlants}) => {
   };
 
     const onSubmit = (e) => {
+        setFetching(true)
         e.preventDefault()
         axiosWithAuth().post('https://water-my-plants-tt101.herokuapp.com/plants/new', plant)
             .then((res) => {
@@ -59,7 +61,9 @@ const AddPlantForm = ({setOpen, getPlants}) => {
                 history.push('/dashboard')
                 setOpen(false)
                 getPlants()
+                setFetching(false)
             })
+            .catch(err => console.log(err))
     }
 
     return (
@@ -117,7 +121,11 @@ const AddPlantForm = ({setOpen, getPlants}) => {
                 >
                     Add Plant
                 </Button>
-                
+                {
+                  fetching 
+                  ? <LinearProgress color='secondary' />
+                  : <></>
+                }
             </Form>
         </>
     )

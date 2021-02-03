@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
-import { Button, TextField, Input, InputLabel, Select, MenuItem } from '@material-ui/core';
+import { Button, TextField, Input, InputLabel, Select, MenuItem, LinearProgress } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { PlantContext } from '../contexts/Plants';
 import { getPlantsAction } from '../actions/getPlantsAction';
@@ -33,6 +33,7 @@ const EditPlant = () => {
    
   const [plant, setPlant] = useState(initialState);
   const [uploading, setUploading] = useState(false);
+  const [fetching, setFetching] = useState(false)
 
   const handleChange = e => {
     setPlant({
@@ -71,6 +72,7 @@ const EditPlant = () => {
   }
 
   const handleSubmit = e => {
+    setFetching(true)
     e.preventDefault();
     axiosWithAuth()
       .put(`https://water-my-plants-tt101.herokuapp.com/plants/${plants.selectedPlant.id}`, plant)
@@ -78,6 +80,7 @@ const EditPlant = () => {
         plantDispatch(clearSelected())
         history.push('/dashboard')
         getPlants()
+        setFetching(false)
     })
   }
 
@@ -143,6 +146,11 @@ const EditPlant = () => {
         >
             Cancel Editing
         </Button>
+        {
+          fetching 
+          ? <LinearProgress color='secondary' />
+          : <></>
+        }
       </Form>
       
     </>
