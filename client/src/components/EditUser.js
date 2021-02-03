@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
-import { Button, TextField } from '@material-ui/core'
+import { Button, TextField, LinearProgress } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import { AuthContext } from '../contexts/Auth'
 import { updateUser } from '../actions/updateUser'
@@ -21,6 +21,7 @@ const EditUser = ({setOpen}) => {
     }
 
     const [user, setUser] = useState(initialState)
+    const [fetching, setFetching] = useState(false)
 
     const handleChange = (e) => {
         setUser({
@@ -30,6 +31,7 @@ const EditUser = ({setOpen}) => {
     }
 
     const onSubmit = (e) => {
+        setFetching(true)
         e.preventDefault()
         axiosWithAuth().put(`https://water-my-plants-tt101.herokuapp.com/users/${state.user.userId}`, user)
             .then(({data}) => {
@@ -37,6 +39,7 @@ const EditUser = ({setOpen}) => {
                 dispatch(updateUser(user))
                 setOpen(false)
                 history.push('/dashboard')
+                setFetching(false)
             })
     }
 
@@ -87,6 +90,11 @@ const EditUser = ({setOpen}) => {
             >
                 Cancel Editing
             </Button>
+            {
+                fetching 
+                ?<LinearProgress color='secondary' />
+                : <></>
+            }
         </Form>
         }
         </>
