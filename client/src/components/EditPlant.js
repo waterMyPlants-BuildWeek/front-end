@@ -44,7 +44,6 @@ const EditPlant = () => {
 
   useEffect(() => {
     setPlant(initialState)
-    console.log('hi')
   }, [initialState]) 
 
   const frequency = [

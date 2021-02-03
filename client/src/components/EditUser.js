@@ -35,7 +35,6 @@ const EditUser = ({setOpen}) => {
         e.preventDefault()
         axiosWithAuth().put(`https://water-my-plants-tt101.herokuapp.com/users/${state.user.userId}`, user)
             .then(({data}) => {
-                console.log(user)
                 dispatch(updateUser(user))
                 setOpen(false)
                 history.push('/dashboard')
