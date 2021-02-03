@@ -1,15 +1,17 @@
 import { Button, IconButton, Menu, MenuItem } from '@material-ui/core'
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import styled from 'styled-components'
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { axiosWithAuth } from '../utils/axiosWithAuth'
 import { selectedPlant } from '../actions/selectedPlant'
 import { PlantContext } from '../contexts/Plants'
 import { formatDate } from '../utils/formatDate'
+import { dateDiff } from '../utils/dateDiff'
+import { decodeFrequency } from '../utils/decodeFrequency';
 
 const PlantCard = (props) => {
 
-    const { plantDispatch } = useContext(PlantContext);
+    const { plants, plantDispatch } = useContext(PlantContext);
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
   
@@ -20,6 +22,12 @@ const PlantCard = (props) => {
     const handleClose = () => {
       setAnchorEl(null);
     };
+
+    useEffect(() => {
+        if (!plants.editing){
+             handleClose()
+        }   
+    }, [plants.editing])
 
     const { 
         nickname,
@@ -48,10 +56,16 @@ const PlantCard = (props) => {
             .catch(err => console.log(err))
     }
 
-
+    const checkNeedsWatering = () => {
+        if(dateDiff(last_watered) > decodeFrequency(h2oFrequency)){
+            return 'water'
+        } else {
+            return ''
+        }
+    }
 
     return (
-        <Card>
+        <Card className={checkNeedsWatering()}>
             <Header>
                 <div>
                 <h2>{nickname}</h2>
@@ -100,7 +114,6 @@ export default PlantCard
 const Card = styled.div`
     display: grid;
     grid-template-columns: 1fr;
-    border: 1px solid #ccc;
     border-radius: 6px;
     box-shadow: 0 0 3px rgba(0,0,0,.35);
     background-color: #fff;
@@ -112,6 +125,9 @@ const Card = styled.div`
     }
     & * {
         margin: 0;
+    }
+    &.water{
+        background-color: #ffcdd2;
     }
 `
 
