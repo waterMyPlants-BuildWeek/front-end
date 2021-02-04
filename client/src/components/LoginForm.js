@@ -39,7 +39,7 @@ const LoginForm = () => {
     });
   };
 
-
+ console.log(initialFormErrors)
 
   const onSubmit = async (e) => {
     e.preventDefault();
