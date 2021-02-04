@@ -8,7 +8,6 @@ import logo from "./images/logo.png";
 import { TweenMax, Power3 } from "gsap";
 import "bootstrap/dist/css/bootstrap.css";
 
-
 const Homepage = () => {
   const history = useHistory();
 
@@ -31,16 +30,12 @@ const Homepage = () => {
   }, []);
 
   useEffect(() => {
-    TweenMax.from(
-        tagLine,
-        3,
-        {
-            opacity: 0,
-            y: -600,
-            ease: Power3.easeInOut,
-        }
-    )
-  }, [])
+    TweenMax.from(tagLine, 3, {
+      opacity: 0,
+      y: -600,
+      ease: Power3.easeInOut,
+    });
+  }, []);
 
   return (
     <div className="d-flex flex-column justify-content-center">
@@ -60,7 +55,7 @@ const Homepage = () => {
           style={{
             fontSize: "1rem",
             marginBottom: "5rem",
-            marginTop: '-2rem',
+            marginTop: "-2rem",
             textAlign: "center",
           }}
         >
@@ -90,10 +85,10 @@ const Homepage = () => {
       </div>
       <div className="spacer-vh50"></div>
       <div className="content-flex">
+        <h3 style={{ marginBottom: "1.5rem", textAlign: "center" }}>
+          What is Water My Plants
+        </h3>
         <p style={{ textAlign: "justify" }}>
-          <h3 style={{ marginBottom: "1.5rem", textAlign: "center" }}>
-            What is Water My Plants
-          </h3>
           Water My Plants is a free app that reminds to you water your plants no
           matter how big or how small. Whether you frequently forget to water
           your plants and precious flowers at your home/ office or you would

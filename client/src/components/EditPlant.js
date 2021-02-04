@@ -17,14 +17,8 @@ const EditPlant = () => {
   const {plants, plantDispatch} = useContext(PlantContext);
   const {state} = useContext(AuthContext);
 
-<<<<<<< HEAD
-  console.log(editingPlant, formatDate);
-
-  const initialState = {
-=======
   const initialState = useMemo(() => {
     return {
->>>>>>> 93c929e49bf6b2c93d748b07838f6e010ae26010
     user_id: state.user.userId,
     nickname: plants.selectedPlant.nickname,
     species: plants.selectedPlant.species,
@@ -41,8 +35,6 @@ const EditPlant = () => {
   const [uploading, setUploading] = useState(false);
   const [fetching, setFetching] = useState(false)
 
-  console.log(uploading)
-
   const handleChange = e => {
     setPlant({
         ...plant,
@@ -52,10 +44,7 @@ const EditPlant = () => {
 
   useEffect(() => {
     setPlant(initialState)
-
-
   }, [initialState]) 
-
 
   const frequency = [
     { title: "Daily", value: 1 },
@@ -193,4 +182,3 @@ const Form = styled.form`
 const Upload = styled(Input)`
   padding: 1rem 0;
 `;
-
