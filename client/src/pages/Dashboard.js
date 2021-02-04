@@ -81,9 +81,9 @@ const Dashboard = () => {
                 className='d-flex flex-column' 
                 style={{backgroundColor: 'white', padding: '1rem 1rem', marginTop: '3rem'}}
             >
-                <h2>Account:</h2> 
-                <h6>Username: {state.user.username}</h6>
-                <h6>Email: {state.user.email}</h6>
+               
+                <h6>Welcome back, {state.user.username}</h6>
+                {/* <h6>Email: {state.user.email}</h6> */}
 
                 <Button 
                     variant='outlined' 
