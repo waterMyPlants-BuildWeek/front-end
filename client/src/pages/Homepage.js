@@ -99,7 +99,7 @@ const Homepage = () => {
       </div>
       <div className="spacer-vh50"></div>
       <div className="content-two d-flex flex-column justify-content-center align-items-center">
-        <h3 style={{ paddingBottom: "3rem" }}>How Do I Use It?</h3>
+        <h3 style={{ padding: "3rem 0" }}>How Do I Use It?</h3>
         <p style={{ padding: "3rem auto" }}>
           After setting up your account simply head to your dashboard and begin
           there! Setting up a new plant to be watered is accomplished in a few
@@ -137,8 +137,8 @@ const Homepage = () => {
         <img src={watering2} className="happy-sizer" alt="happy gardener" />
       </div>
       <button
-        className="btn btn-outline-dark"
-        style={{ margin: "5rem" }}
+        className="btn btn-three"
+        style={{ margin: "5rem auto" }}
         variant="contained"
         onClick={() => history.push("/dashboard")}
       >

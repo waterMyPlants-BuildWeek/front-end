@@ -1,14 +1,15 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import { Button, LinearProgress, TextField } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../contexts/Auth";
 import { userLogin } from "../actions/userLogin";
-import signUpSchema from './signUpSchema';
-import initialFormErrors from './initialFormErrors';
-
-
+import signUpSchema from "./signUpSchema";
+import loginSchema from "./loginSchema";
+import initialFormErrors from "./initialFormErrors";
+import "bootstrap/dist/css/bootstrap.css";
+import * as yup from "yup";
 
 const LoginForm = () => {
   const history = useHistory();
@@ -21,41 +22,77 @@ const LoginForm = () => {
     email: "",
   };
 
-  const formData = {};
+  //   const formData = {};
 
   const [user, setUser] = useState(initialState);
   const [login, setLogin] = useState(true);
   const [fetching, setFetching] = useState(false);
-  //const [formErrors, setErrors] = useState(initialFormErrors);
- 
+  const [formErrors, setErrors] = useState(initialFormErrors);
+  const [disabled, setDisabled] = useState(true);
+
   //helper functions
+  //Form Validation Feature
+  //validate whether form matches schema
+  const validateChange = (e) => {
+    //allows react to keep the event object to play nicely with the async
+    e.persist();
+    //reach allows to check a specific value of schema
+    if (login) {
+      console.log(loginSchema, "login");
+      yup
+        .reach(loginSchema, e.target.name)
+        .validate(e.target.name)
+        .then((valid) => {
+          //logs validation truthiness
+          console.log(valid);
+          setErrors({
+            ...formErrors,
+            [e.target.name]: "",
+          });
+        })
+        .catch((error) => {
+          setErrors({ ...formErrors, [e.target.name]: error.errors[0] });
+          console.log(error);
+        });
+    } else {
+      console.log(signUpSchema, "signup");
+      yup
+        .reach(signUpSchema, e.target.name)
 
-
-  const handleChange = (e) => {
-    
-    setUser({
-      ...user,
-      [e.target.name]: e.target.value,
-    });
+        .validate(e.target.name)
+        .then((valid) => {
+          //logs validation truthiness
+          console.log(valid);
+          setErrors({
+            ...formErrors,
+            [e.target.name]: "",
+          });
+        })
+        .catch((error) => {
+          setErrors({ ...formErrors, [e.target.name]: error.errors[0] });
+          console.log(error);
+        });
+    }
   };
 
- console.log(initialFormErrors)
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    validateChange(e);
+    setUser((user) => ({
+      ...user,
+      [name]: value,
+    }));
+  };
+
+  useEffect(() => {
+    loginSchema.isValid(user).then((valid) => setDisabled(!valid));
+  }, [user]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    
-    console.log(formData);
-
-    const isValid = await signUpSchema.isValid(formData)
-    console.log(isValid)
 
     setFetching(true);
-    if (isValid !== true){
-        console.log('Your Form is Not Valid')
-        alert('Please provide all information')
-    }
-    else if (login && isValid === true) {
-        console.log('your form is valid')
+    if (login) {
       axios
         .post("https://water-my-plants-tt101.herokuapp.com/users/login", user)
         .then(({ data }) => {
@@ -65,8 +102,7 @@ const LoginForm = () => {
           setFetching(false);
         })
         .catch((err) => console.log(err));
-    } else if (isValid === true) {
-        console.log('your form is valid')
+    } else {
       axios
         .post(
           "https://water-my-plants-tt101.herokuapp.com/users/register",
@@ -81,8 +117,6 @@ const LoginForm = () => {
         .catch((err) => console.log(err.message));
     }
   };
-
-
 
   return (
     <>
@@ -119,13 +153,19 @@ const LoginForm = () => {
           label="password"
           margin="dense"
         />
-        <Button type="submit" variant="contained" color="primary">
+        <Button
+          disabled={disabled}
+          type="submit"
+          variant="contained"
+          color="primary"
+          style={{ color: "white" }}
+        >
           {login ? "Login" : "Sign Up"}
         </Button>
         {fetching ? <LinearProgress color="secondary" /> : <></>}
       </Form>
       <Button
-        color="secondary"
+        className="btn btn-three"
         size="small"
         variant="contained"
         onClick={() => setLogin(!login)}
