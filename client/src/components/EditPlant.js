@@ -182,4 +182,3 @@ const Form = styled.form`
 const Upload = styled(Input)`
   padding: 1rem 0;
 `;
-
