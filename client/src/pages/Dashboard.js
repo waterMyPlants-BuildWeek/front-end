@@ -82,7 +82,7 @@ const Dashboard = () => {
                 style={{backgroundColor: 'white', padding: '1rem 1rem', marginTop: '3rem'}}
             >
                
-                <h6>Welcome back, {state.user.username}</h6>
+                <h4 style={{textAlign: 'center'}}>Welcome back, {state.user.username}</h4>
                 {/* <h6>Email: {state.user.email}</h6> */}
 
                 <Button 
