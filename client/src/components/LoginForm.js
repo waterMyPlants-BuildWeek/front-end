@@ -101,7 +101,7 @@ const LoginForm = () => {
           history.push("/dashboard");
           setFetching(false);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err.response.data.message));
     } else {
       axios
         .post(
@@ -114,7 +114,7 @@ const LoginForm = () => {
           history.push("/dashboard");
           setFetching(false);
         })
-        .catch((err) => console.log(err.message));
+        .catch((err) => console.log(err.response.data.message));
     }
   };
 
