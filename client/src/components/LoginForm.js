@@ -29,6 +29,7 @@ const LoginForm = () => {
   const [fetching, setFetching] = useState(false);
   const [formErrors, setErrors] = useState(initialFormErrors);
   const [disabled, setDisabled] = useState(true);
+  const [backendError, setBackendError] = useState()
 
   //helper functions
   //Form Validation Feature
@@ -36,7 +37,7 @@ const LoginForm = () => {
   const validateChange = (e) => {
     //allows react to keep the event object to play nicely with the async
     e.persist();
-    //reach allows to check a specific value of schema
+    //reach allows us to check a specific value of schema
     if (login) {
       console.log(loginSchema, "login");
       yup
@@ -52,7 +53,7 @@ const LoginForm = () => {
         })
         .catch((error) => {
           setErrors({ ...formErrors, [e.target.name]: error.errors[0] });
-          console.log(error);
+          console.log({ error });
         });
     } else {
       console.log(signUpSchema, "signup");
@@ -70,7 +71,7 @@ const LoginForm = () => {
         })
         .catch((error) => {
           setErrors({ ...formErrors, [e.target.name]: error.errors[0] });
-          console.log(error);
+          console.log({ error });
         });
     }
   };
@@ -101,7 +102,11 @@ const LoginForm = () => {
           history.push("/dashboard");
           setFetching(false);
         })
-        .catch((err) => console.log(err.response.data.message));
+        .catch((err) => {
+          const backError = err.response.data.message;
+          setBackendError(backError)
+          console.log(backError, "sign in error from the api");
+        });
     } else {
       axios
         .post(
@@ -114,7 +119,12 @@ const LoginForm = () => {
           history.push("/dashboard");
           setFetching(false);
         })
-        .catch((err) => console.log(err.response.data.message));
+        .catch((err) => {
+          alert('Please Provide a Valid Username, Email, and Password or Return to the Sign in Page to Create an Account')
+          const backError = err.response.data.message;
+          setBackendError(backError)
+          console.log(backError, "sign in error from the api");
+        });
     }
   };
 
@@ -153,6 +163,7 @@ const LoginForm = () => {
           label="password"
           margin="dense"
         />
+        <h6 style={{textAlign: 'center', color: 'red'}}>{backendError}</h6>
         <Button
           disabled={disabled}
           type="submit"
