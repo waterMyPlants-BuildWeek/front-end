@@ -22,8 +22,6 @@ const LoginForm = () => {
     email: "",
   };
 
-  //   const formData = {};
-
   const [user, setUser] = useState(initialState);
   const [login, setLogin] = useState(true);
   const [fetching, setFetching] = useState(false);
@@ -32,12 +30,11 @@ const LoginForm = () => {
   const [backendError, setBackendError] = useState()
 
   //helper functions
+
   //Form Validation Feature
-  //validate whether form matches schema
   const validateChange = (e) => {
     //allows react to keep the event object to play nicely with the async
     e.persist();
-    //reach allows us to check a specific value of schema
     if (login) {
       console.log(loginSchema, "login");
       yup
@@ -103,6 +100,7 @@ const LoginForm = () => {
           setFetching(false);
         })
         .catch((err) => {
+          alert('Please Provide a Valid Username, and Password Combination or Start A New Account By Clicking The Sign-up Button')
           const backError = err.response.data.message;
           setBackendError(backError)
           console.log(backError, "sign in error from the api");
@@ -120,7 +118,7 @@ const LoginForm = () => {
           setFetching(false);
         })
         .catch((err) => {
-          alert('Please Provide a Valid Username, Email, and Password or Return to the Sign in Page to Create an Account')
+          alert('Please Provide a Valid Username, Email, and Password (6-15 characters long) to Create an Account')
           const backError = err.response.data.message;
           setBackendError(backError)
           console.log(backError, "sign in error from the api");
