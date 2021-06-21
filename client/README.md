@@ -1,3 +1,6 @@
+This app is for all who love their plants! Are you tired of trying to remember when you last watered them? Some plants need to be watered more and some less. Maybe you want to go out of town and have a plant sitter; how will they stay on your perfect wating schedule? This app creates is a wonderful way to keep track of the watering schedule for individual plants and lets you see them all together to tweek the care of your beloved plant family as needed.
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
